@@ -1,0 +1,1 @@
+A GUI allows the user to interact with their computer using visual elements, like file explorer, or windows settings. On the other hand a CLI requires the user to interact with the computer by using text based prompts.
