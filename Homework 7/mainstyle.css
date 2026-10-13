@@ -1,0 +1,53 @@
+.purpleyellow{
+    color:yellow;
+    background-color: purple;
+    font-size: 40px;
+    font-family: times new roman;
+}
+
+span.purpleyellow{
+    color:yellow;
+    background-color: purple;
+     font-size: 40px;
+    font-family: times new roman;
+}
+
+.purpleyellowsmall{
+    color:yellow;
+    background-color: purple;
+     font-size: 25px;
+    font-family: times new roman;
+}
+
+span.purpleyellowsmall{
+    color:yellow;
+    background-color: purple;
+     font-size: 25px;
+    font-family: times new roman;
+}
+
+.bluewhite{
+    color:white;
+    background-color: blue;
+     font-size: 15px;
+    font-family: comic sans ms;
+}
+
+span.bluewhite{
+    color:white;
+    background-color: blue;
+     font-size: 15px;
+    font-family: comic sans ms;
+}
+
+#foodlink{
+    color:green;
+     font-size: 15px;
+    font-family: comic sans ms;
+}
+
+#otherlinks{
+    color:red;
+     font-size: 15px;
+    font-family: comic sans ms;
+}
