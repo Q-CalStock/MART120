@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Third Page</title>
+     <style>
+        span {
+            background-color: 
+            purple;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="mainstyle.css">
+</head>
+<body>
+    <h1><span class="purpleyellow">Contact Me</span></h1>
+   <br />
+    <form id="contactinfo" onsubmit="return checkall">
+<script>
+function checkBox(id) {
+    var box = document.getElementById(id);
+    if (box.value.trim() == "") {
+        box.style.backgroundColor = "red";
+        return false;
+    }
+    else {
+        box.style.backgroundColor = "white";
+        return true;
+    }
+}
+function showMessage(text) {
+    var message = document.getElementById("message");
+    message.innerHTML = text;
+    message.style.color = "red";
+    message.style.fontWeight = "bold";
+}
+function checkNames() {
+    var first = checkBox("fName");
+    var last = checkBox("lName");
+    var email = checkBox("email");
+    if (first == false || last == false || email == false) {
+        showMessage("You haven't filled everything!");
+        if (first == false) {
+            document.getElementById("fName").focus();
+        }
+        return false;
+    }
+    return true;
+}
+function checkGame() {
+    var game = checkBox("game");
+    if (game == false) {
+        showMessage("You haven't filled everything!");
+        document.getElementById("game").focus();
+        return false;
+    }
+    return true;
+}
+function checkEverything() {
+    var names = checkNames();
+    var game = checkGame();
+    var burgers = document.querySelector(
+        'input[name="burgers"]:checked'
+    );
+    if (names == false || game == false || burgers == null) {
+        showMessage("You haven't filled out everything!");
+        if (names == false) {
+            if (document.getElementById("fName").value.trim() == "") {
+                document.getElementById("fName").focus();
+            }
+        }
+        return false;
+    }
+    alert("Form submitted successfully!");
+    return false;
+}
+</script>
+    First Name: <input type="text" id="fName"><br>
+    Last Name: <input type="text" id="lName"><br>
+    Email Address: <input type="text" id="email"><br>
+    <button type="button" onclick="checkNames()" id="mySubmit">Submit</button>
+    <h3><span class="purpleyellowsmall">Do you like the burgers?</span></h3>
+    <input type="radio" name="YES" value="YES">YES<br>
+    <input type="radio" name="NO" value="NO">NO<br>
+    <h3><span class="purpleyellowsmall">What is your favorite game?</span></h3>
+    <input type="text" id="game"><br>
+    <button id="mySubmit" type="button" onclick="checkGame()">Submit</button>
+    <div id="message"></div>
+    <br />
+    <br />
+     <button type="submit">Submit Contact Info
+    </button>
+  </form>
+    <br />
+    <br />
+    <br />
+    <br />
+    <a href="Quaid'sWebsitePage1.3.html" style="text-decoration: none;" target="_blank" class="bluewhite">Link to Page 1 - Home</a>
+    <br />
+    <br />
+    <a href="Quaid'sWebsitePage2.3.html" style="text-decoration: none;" target="_blank" class="bluewhite">Link to Page 2 - Art and Story Summary</a>
+</body>
