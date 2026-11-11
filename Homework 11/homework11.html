@@ -1,0 +1,181 @@
+<html>
+<head>
+  <title>homework11</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+    }
+    canvas {
+      background: black;
+      border: 2px solid white;
+    }
+  </style>
+</head>
+<body>
+<h1>Dot Game</h1>
+
+<canvas id="game" width="600" height="400"></canvas>
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let player = {
+  x: 50,
+  y: 200,
+  radius: 12,
+  speed: 4
+};
+
+let exit = {
+  x: 550,
+  y: 150,
+  width: 40,
+  height: 100
+};
+
+let obstacles = [
+  {x: 150, y: 100, r: 15, dx: 2, dy: 1},
+  {x: 300, y: 250, r: 25, dx: -2, dy: 2},
+  {x: 450, y: 100, r: 20, dx: 1, dy: -2}
+];
+
+let purpleDot = null;
+let keys = {};
+let won = false;
+
+document.addEventListener("keydown", function(e) {
+  keys[e.key.toLowerCase()] = true;
+  if (e.key.startsWith("Arrow")) {
+    e.preventDefault();
+  }
+});
+document.addEventListener("keyup", function(e) {
+  keys[e.key.toLowerCase()] = false;
+});
+
+canvas.addEventListener("click", function(e) {
+  if (purpleDot == null) {
+    let rect = canvas.getBoundingClientRect();
+    purpleDot = {
+      x: (e.clientX - rect.left) *
+         canvas.width / rect.width,
+      y: (e.clientY - rect.top) *
+         canvas.height / rect.height,
+      r: 18
+    };
+  }
+});
+
+function drawCircle(x, y, r, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function movePlayer() {
+  if (keys["w"] || keys["arrowup"]) {
+    player.y -= player.speed;
+  } else if (keys["s"] || keys["arrowdown"]) {
+    player.y += player.speed;
+  }
+  if (keys["a"] || keys["arrowleft"]) {
+    player.x -= player.speed;
+  } else if (keys["d"] || keys["arrowright"]) {
+    player.x += player.speed;
+  }
+
+  player.x = Math.max(player.radius,
+    Math.min(canvas.width - player.radius, player.x));
+  player.y = Math.max(player.radius,
+    Math.min(canvas.height - player.radius, player.y));
+}
+
+function moveObstacles() {
+  for (let o of obstacles) {
+
+    o.dx += (Math.random() - 0.5) * 0.1;
+    o.dy += (Math.random() - 0.5) * 0.1;
+
+    o.dx = Math.max(-3, Math.min(3, o.dx));
+    o.dy = Math.max(-3, Math.min(3, o.dy));
+    o.x += o.dx;
+    o.y += o.dy;
+
+    if (o.x > canvas.width + o.r) {
+      o.x = -o.r;
+    } else if (o.x < -o.r) {
+      o.x = canvas.width + o.r;
+    }
+    if (o.y > canvas.height + o.r) {
+      o.y = -o.r;
+    } else if (o.y < -o.r) {
+      o.y = canvas.height + o.r;
+    }
+  }
+}
+
+function checkWin() {
+  if (
+    player.x + player.radius > exit.x &&
+    player.x - player.radius < exit.x + exit.width &&
+    player.y + player.radius > exit.y &&
+    player.y - player.radius < exit.y + exit.height
+  ) {
+    won = true;
+  }
+}
+
+function draw() {
+
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (won == false) {
+    movePlayer();
+    moveObstacles();
+    checkWin();
+  }
+
+  ctx.fillStyle = "yellow";
+  ctx.fillRect(exit.x, exit.y, exit.width, exit.height);
+
+  for (let o of obstacles) {
+    drawCircle(o.x, o.y, o.r, "red");
+  }
+
+  if (purpleDot != null) {
+    drawCircle(
+      purpleDot.x,
+      purpleDot.y,
+      purpleDot.r,
+      "purple"
+    );
+  }
+
+  drawCircle(
+    player.x,
+    player.y,
+    player.radius,
+    "blue"
+  );
+  if (won == true) {
+    ctx.fillStyle = "yellow";
+    ctx.font = "bold 48px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      "YOU WON!",
+      canvas.width / 2,
+      canvas.height / 2
+    );
+  }
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+</body>
+</html>
+
